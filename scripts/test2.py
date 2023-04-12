@@ -29,7 +29,7 @@ async def main():
     rival = opponent1
 
     #Creamos el entorno y el cargamos el modelo
-    print('Cargamos el entorno ->')
+    print('Definimos el entorno ->')
     test_env = SimpleRLPlayer(player_configuration=rl_player_1_configuration, battle_format="gen4randombattle", start_challenging=True, opponent = rival)
     print('Cargamos el modelo ->')
     model_test = DQN.load("DQN_30000i")
