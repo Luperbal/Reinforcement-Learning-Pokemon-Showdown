@@ -20,9 +20,9 @@ async def main():
     
     #Creamos el entorno y el cargamos el modelo
     print('Definimos el entorno ->')
-    env = SimpleRLPlayer(battle_format="gen4randombattle", start_challenging=True, opponent = rival)
+    test_env = SimpleRLPlayer(battle_format="gen4randombattle", start_challenging=True, opponent = rival)
     print('Cargamos el modelo ->')
-    model = DQN.load("DQN_20000i")
+    model_test = DQN.load("DQN_20000i")
 
     #Testeamos el modelo entrenado enfrentandolo 500 veces contra el rival
     #que se ha seleccionado antes. Se guarda la recompensa promedia y el 
