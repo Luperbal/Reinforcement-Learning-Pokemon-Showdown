@@ -116,7 +116,6 @@ async def main():
     n_battles_win = test_env_MaxBPP.n_won_battles/episodios*100
     print("  WIN % = ", n_battles_win)
     print("  Recompensa promedia: ", score_final/episodios)
-    #print('fin')
 
     del  model_test
     
