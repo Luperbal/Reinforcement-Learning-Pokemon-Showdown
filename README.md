@@ -9,3 +9,6 @@ https://stable-baselines3.readthedocs.io/en/master/
 
 ![image](https://github.com/Luperbal/Reinforcement-Learning-Pokemon-Showdown/assets/82396990/ca3c2daa-77c3-4370-9fef-d59685ba2863)
 
+----------------------------------------------------------------------
+
+La paralelización y la vectorización del entorno, usados en los scrips de "multiprocessing", no funcionan correctamente al tener solamente un servidor donde se alojan todas las batallas, lo que lleva a que todos los entornos interactuen entre sí y los resultados no sean los esperados
