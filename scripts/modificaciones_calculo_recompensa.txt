@@ -5,6 +5,7 @@ def calc_reward(self, action, last_battle, current_battle) -> float:
             current_battle, fainted_value=2.0, hp_value=1.0, victory_value=30.0, action=action, 
                 dmg_value=0.45,type_mult=2.35, status_value=0.2, boost_value = 0.2
         )
+#Modificar la línea del cálculo de la recompensa dentro de la función "step" dentro de la Clase "OpenAIGymEnv" en el archivo "openai_api.py"
 
 #Añadir estas líneas en la función "reward_computing_helper" dentro de la Clase "EnvPlayer" en el archivo "env_player.py"
 def reward_computing_helper(
