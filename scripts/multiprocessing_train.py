@@ -111,7 +111,7 @@ async def main():
         model = DQN.load("DQN_"+str(steps_model)+"i_2", target_update_interval=10000)
         model.load_replay_buffer("DQN_"+str(steps_model)+"i_2")
         model.set_env(vec_env)
-        model.learn(total_timesteps=new_training_steps)
+        model.learn(total_timesteps=new_training_steps,progress_bar=True, reset_num_timesteps = False)
         steps_model += new_training_steps
         model.save("DQN_"+str(steps_model)+"i_2")
         model.save_replay_buffer("DQN_"+str(steps_model)+"i_2")
