@@ -1,0 +1,2 @@
+Para probarlo y enfrentarse a él, hay que guardarlo en la misma carpeta donde estén los scripts 
+y el los archivos de test cargar este modelo y decir que el rival sea tu usuario de Pokemon Showdown
