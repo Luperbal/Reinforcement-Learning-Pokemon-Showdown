@@ -1,0 +1,111 @@
+#Añadir estas líenas a la función "reward_computing_helper" dentro de la Clase "EnvPlayer" en el archivo env_player.py
+
+def reward_computing_helper(
+        self,
+        battle: AbstractBattle,
+        *,
+        fainted_value: float = 0.0,
+        hp_value: float = 0.0,
+        number_of_pokemons: int = 6,
+        starting_value: float = 0.0,
+        status_value: float = 0.0,
+        victory_value: float = 1.0,
+        dmg_value: float = 0.5,
+        type_mult: float = 0.5,
+        boost_value: float = 0.5,
+        action: int = -1
+    ) -> float:
+---
+---
+---
+        #Si el ataque hecho es efectivo o no, tener en cuenta para la recompensa
+        if (action > -1 and action < 4 and action < len(battle.available_moves)):
+            move = battle.available_moves[action]
+            if move.type :
+                dmg = move.type.damage_multiplier(
+                        battle.opponent_active_pokemon.type_1,
+                        battle.opponent_active_pokemon.type_2,
+                    )
+                
+                if dmg > 1:
+                    current_value += dmg_value*dmg
+                if dmg > 0 and dmg < 1:
+                    current_value -= dmg_value*2
+                if dmg == 0:
+                    current_value -= dmg_value*4
+                           
+                if move.type == battle.active_pokemon.types[0] or move.type == battle.active_pokemon.types[1]:
+                    current_value += dmg_value
+        ###########################
+        
+        ###########################
+        #Si el tipo de mi pokemon es debil al del rival, tener en cuenta para la recompensa. Cambio?
+        my_type = battle.active_pokemon.types
+        oppo_type1 = battle.opponent_active_pokemon.types[0]
+        oppo_type2 = battle.opponent_active_pokemon.types[1]
+        m = my_type[0].damage_multiplier(oppo_type1,oppo_type2)
+        m3 = oppo_type1.damage_multiplier(my_type[0],my_type[1])
+
+        if my_type[1] is not None:
+            m2 = my_type[1].damage_multiplier(oppo_type1,oppo_type2)
+            m = m*m2
+
+        if oppo_type2 is not None:
+            m4 = oppo_type2.damage_multiplier(my_type[0],my_type[1])
+            m3 = m3*m4
+
+        if m > m3:
+            current_value += type_mult
+        elif m < m3 :
+            current_value -= type_mult
+        elif m==0:
+            current_value -= type_mult*2
+        elif m3==0:
+            current_value += type_mult*2
+        ###########################
+        
+        ######################
+        #Si la accion es un cambio, tener en cuenta el tipo del pokemon que saco
+        if 0 <= action - 4 < len(battle.available_switches):
+            #Si el tipo de mi pokemon es debil al del rival, tener en cuenta para la recompensa. Cambio?
+
+            if m > m3:
+                current_value += type_mult*3.5
+            elif m < m3 :
+                current_value -= type_mult*3.5
+            elif m==0:
+                current_value -= type_mult*5.5
+            elif m3==0:
+                current_value += type_mult*5.5
+            
+        #Si el cambio es obligatorio, y cambiamos a un pokemon malo, valores negativos
+        if battle.force_switch:
+            a = current_value
+            if m > m3:
+                current_value += type_mult*4
+            elif m < m3 :
+                current_value -= type_mult*4
+            elif m==0:
+                current_value -= type_mult*6
+            elif m3==0:
+                current_value += type_mult*6
+        #######################
+        
+        #######################
+        
+        # Si hay algún tipo de boosteo, tanto positivo como negativo
+        my_pokemon = battle.active_pokemon
+        oppo_pokemon = battle.opponent_active_pokemon
+        for boost in my_pokemon.boosts:
+            if my_pokemon.boosts[boost] > 0:
+                current_value += boost_value
+            if my_pokemon.boosts[boost] < 0:
+                current_value -= boost_value
+            if oppo_pokemon.boosts[boost] > 0:
+                current_value -= boost_value
+            if oppo_pokemon.boosts[boost] < 0:
+                current_value += boost_value
+---
+---
+---
+return to_return
