@@ -1,0 +1,11 @@
+#Incluye esta clase dentro de baselines.py, junto al resto de Players
+class MinBasePowerAndRandomPlayer(Player):
+    def choose_move(self, battle):
+        election = random.random()
+        if(election <= 0.7):
+            if battle.available_moves:
+                filtered_moves = list(filter(lambda move: move.base_power > 0, battle.available_moves))
+                if filtered_moves:
+                    worst_move = min(filtered_moves, key=lambda move: move.base_power)
+                    return self.create_order(worst_move)
+        return self.choose_random_move(battle)
